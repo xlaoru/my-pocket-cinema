@@ -1,1 +1,11 @@
-<p>movie-card works!</p>
+<article>
+    <div class="img-wrapper">
+        <div class="rate" [style.background]="rateColor()">
+            <p>{{ movie().rating }}</p>
+        </div>
+        <img [src]="movie().posterUrl" [alt]="movie().title" />
+    </div>
+    <h3>{{ movie().title }}</h3>
+    <p [style.color]="'var(--color-text-muted)'">{{ movie().year }} · {{ movie().genres.join(", ") }}</p>
+    <app-button [variant]="'ghost'" [block]="true">Save</app-button>
+</article>
