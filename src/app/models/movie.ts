@@ -9,3 +9,8 @@ export interface Movie {
   rating: number;
   director: string;
 }
+
+export interface RecommendationsResponse {
+  source: 'popular' | 'personal';
+  movies: Movie[];
+}
