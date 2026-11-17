@@ -1,1 +1,20 @@
-<p>button works!</p>
+<button
+  class="btn"
+  [type]="type()"
+  [class]="{
+    'btn-primary': variant() === 'primary',
+    'btn-secondary': variant() === 'secondary',
+    'btn-ghost': variant() === 'ghost',
+    'btn-inline': variant() === 'inline',
+    'btn-icon': variant() === 'icon',
+    'btn-rating': variant() === 'rating',
+    'btn-sm': size() === 'sm',
+    'btn-block': block(),
+    'is-active': active(),
+    'is-danger': danger(),
+    'is-filled': filled()
+  }"
+  [disabled]="disabled()"
+>
+  <ng-content />
+</button>
