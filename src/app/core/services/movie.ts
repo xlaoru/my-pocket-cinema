@@ -22,7 +22,7 @@ export class MovieService {
 
     private searchResource = httpResource<Movie[]>(() => {
         const q = this.query()
-        return q ? `/api/movies?search=${q}` : undefined
+        return q ? `/api/movies?search=${encodeURIComponent(q)}` : undefined
     }, { defaultValue: [] })
 
     readonly searchResults = this.searchResource.value

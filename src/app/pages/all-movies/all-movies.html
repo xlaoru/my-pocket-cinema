@@ -1,1 +1,22 @@
-<p>all-movies works!</p>
+@if (movieService.searchLoading()) {
+    <div class="loader-wrapper">
+        <app-loader />
+    </div>
+} @else if (movieService.searchError()) {
+    <div class="error-wrapper">
+        <h2>Oops, something went wrong...</h2>
+        <p>Please wait a little bit</p>
+        <app-button
+            (click)="movieService.reloadSearchResults()"
+        >
+            Try again
+        </app-button>
+    </div>
+} @else {
+    <a routerLink="/" class="back-link">
+        <svg class="back-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Back
+    </a>
+}
