@@ -8,13 +8,13 @@ header {
     border-bottom: 1px solid var(--border);
 }
 
-.search-wrapper {
+form {
     display: flex;
     flex: 1;
     gap: var(--space-2);
 }
 
-.search-wrapper app-input {
+form app-input {
     flex: 1;
 }
 

@@ -2,16 +2,19 @@
     <a routerLink="/">
         <h3>My Pocket Cinema</h3>
     </a>
-    <div class="search-wrapper">
+    <form
+        (submit)="onSearch($event)"
+    >
         <app-input 
             [placeholder]="'Search by title'"
             [(value)]="searchValue"
         />
         <app-button
+            [type]="'submit'"
         >
             Search
         </app-button>
-    </div>
+    </form>
     <app-tabs
         [items]="headerTabs"
     />
