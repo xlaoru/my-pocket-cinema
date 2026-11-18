@@ -2,6 +2,20 @@ import { httpResource } from '@angular/common/http';
 import { Service, computed, signal } from '@angular/core';
 import { Movie, RecommendationsResponse } from '../models/movie';
 
+function recommendationsResource(url: () => string | undefined) {
+    const resource = httpResource<RecommendationsResponse>(url, {
+        defaultValue: { source: "popular", movies: [] }
+    })
+
+    return {
+        movies: computed(() => resource.hasValue() ? resource.value().movies : []),
+        source: computed(() => resource.hasValue() ? resource.value().source : null),
+        loading: resource.isLoading,
+        error: resource.error,
+        reload: () => resource.reload(),
+    }
+}
+
 @Service()
 export class MovieService {
     readonly query = signal("")
@@ -15,24 +29,18 @@ export class MovieService {
     readonly searchLoading = this.searchResource.isLoading
     readonly searchError = this.searchResource.error
 
-    readonly recommendationResource = httpResource<RecommendationsResponse>(() => "/api/recommendations", {
-        defaultValue: { source: "popular", movies: [] }
-    })
+    readonly recommendations = recommendationsResource(() => "/api/recommendations")
 
-    readonly recommendations = computed(() =>
-        this.recommendationResource.hasValue() ? this.recommendationResource.value().movies : []
+    readonly topPicks = recommendationsResource(
+        () => `/api/recommendations/top-picks?limit=${1}`
     )
-    readonly recommendationsSource = computed(() =>
-        this.recommendationResource.hasValue() ? this.recommendationResource.value().source : null
-    )
-    readonly recommendationsLoading = this.recommendationResource.isLoading
-    readonly recommendationsError = this.recommendationResource.error
 
     reloadSearchResults() {
         this.searchResource.reload()
     }
 
     reloadRecommendations() {
-        this.recommendationResource.reload()
+        this.recommendations.reload()
+        this.topPicks.reload()
     }
 }
