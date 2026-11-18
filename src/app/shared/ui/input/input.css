@@ -1,0 +1,14 @@
+:host {
+    display: block;
+}
+
+input {
+    height: var(--control-height);
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    width: 100%;
+    font-size: var(--fs-h4);
+    color: var(--text);
+}
