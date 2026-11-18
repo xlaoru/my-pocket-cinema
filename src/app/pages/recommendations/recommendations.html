@@ -1,21 +1,47 @@
-@if (movieService.recommendations.loading() && movieService.topPicks.loading()) {
+@if (movieService.recommendations.loading() && movieService.topPick.loading()) {
     <div class="loader-wrapper">
         <app-loader />
     </div>
-} @else if (movieService.recommendations.error() && movieService.topPicks.error()) {
+} @else if (movieService.recommendations.error() && movieService.topPick.error()) {
     <div class="error-wrapper">
         <h2>Oops, something went wrong...</h2>
         <p>Please wait a little bit</p>
         <app-button
-            (click)="movieService.recommendations.reload(); movieService.topPicks.reload()"
+            (click)="movieService.reloadRecommendations()"
         >
             Try again
         </app-button>
     </div>
 } @else {
-    <ul>
-        @for (movie of recommendations(); track movie.id) {
-            <app-movie-card [movie]="movie" />
+    <div class="wrapper">
+        @if (topPick(); as movie) {
+            <article>
+                <img [src]="movie.posterUrl" [alt]="movie.title" />
+                <div class="info-wrapper">
+                    <p class="eyebrow">Top Pick for you</p>
+                    <h1>{{ movie.title }}</h1>
+                    <p>{{ movie.year }} · {{ movie.genres.join(', ') }} · {{ movie.runtime }} min</p>
+                    <p>{{ movie.overview }}</p>
+                    <div class="control-wrapper">
+                        <app-button>
+                            View details
+                        </app-button>
+                        <app-button
+                            [variant]="'ghost'"
+                        >
+                            Save
+                        </app-button>
+                    </div>
+                </div>
+            </article>
         }
-    </ul>
+        <div class="for-you-wrapper">
+            <h2>For you</h2>
+            <ul>
+                @for (movie of recommendations(); track movie.id) {
+                    <app-movie-card [movie]="movie" />
+                }
+            </ul>
+        </div>
+    </div>
 }

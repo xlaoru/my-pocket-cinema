@@ -13,4 +13,5 @@ import { Button } from '../../shared/ui/button/button';
 export class Recommendations {
   protected movieService = inject(MovieService)
   protected recommendations = this.movieService.recommendations.movies
+  protected topPick = this.movieService.topPick.movie
 }

@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { Service, computed, signal } from '@angular/core';
-import { Movie, RecommendationsResponse } from '../models/movie';
+import { Movie, RecommendationsResponse, TopPickResponse } from '../models/movie';
 
 function recommendationsResource(url: () => string | undefined) {
     const resource = httpResource<RecommendationsResponse>(url, {
@@ -31,9 +31,17 @@ export class MovieService {
 
     readonly recommendations = recommendationsResource(() => "/api/recommendations")
 
-    readonly topPicks = recommendationsResource(
-        () => `/api/recommendations/top-picks?limit=${1}`
+    private topPickResource = httpResource<TopPickResponse>(
+        () => "/api/recommendations/top-pick"
     )
+
+    readonly topPick = {
+        movie: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().movie : null),
+        source: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().source : null),
+        loading: this.topPickResource.isLoading,
+        error: this.topPickResource.error,
+        reload: () => this.topPickResource.reload(),
+    }
 
     reloadSearchResults() {
         this.searchResource.reload()
@@ -41,6 +49,6 @@ export class MovieService {
 
     reloadRecommendations() {
         this.recommendations.reload()
-        this.topPicks.reload()
+        this.topPick.reload()
     }
 }

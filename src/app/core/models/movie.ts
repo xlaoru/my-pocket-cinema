@@ -14,3 +14,8 @@ export interface RecommendationsResponse {
   source: 'popular' | 'personal';
   movies: Movie[];
 }
+
+export interface TopPickResponse {
+  source: 'popular' | 'personal';
+  movie: Movie | null;
+}
