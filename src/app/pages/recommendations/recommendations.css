@@ -60,7 +60,8 @@ img {
 
 ul {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 200px);
+    justify-content: space-between;
     gap: var(--space-6);
     padding: 0;
 }
