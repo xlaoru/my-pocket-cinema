@@ -13,6 +13,7 @@
   --accent: #FFB547;
   --accent-hover: #FFC978;
   --on-accent: #1A1205;
+  --bg-accent: #2A2418;
 
   --text: #F2F2F2;
   --text-body: #D6D7DC;
@@ -50,6 +51,7 @@
   /* Sequence */
   --container: 1200px;
   --control-height: 44px;
+  --tab-height: 20px;
 
   /* Typography */
   --fs-display: 52px;

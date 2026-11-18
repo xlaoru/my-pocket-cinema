@@ -1,0 +1,11 @@
+<nav>
+    @for (item of items(); track item.value) {
+        <button
+            class="tab"
+            [class.active]="activeTab() === item.value"
+            (click)="selectTab(item.value)"
+        >
+            {{ item.title }}
+        </button>
+    }
+</nav>
