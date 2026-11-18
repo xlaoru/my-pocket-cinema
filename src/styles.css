@@ -70,6 +70,36 @@
   box-sizing: border-box;
 }
 
+/* Scrollbar */
+* {
+  scrollbar-color: var(--surface-2) transparent;
+}
+
+*:hover {
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Safari / old Chrome fallback */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border-radius: var(--radius-pill);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+}
+
 body {
   margin: 0;
   background: var(--bg);

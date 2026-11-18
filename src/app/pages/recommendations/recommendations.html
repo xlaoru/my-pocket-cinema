@@ -1,0 +1,5 @@
+<ul>
+    @for (movie of recommendations(); track movie.id) {
+        <app-movie-card [movie]="movie" />
+    }
+</ul>

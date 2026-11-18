@@ -1,13 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component  } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MovieService } from './core/services/movie';
+import { Header } from './layout/header/header';
+import { Footer } from './layout/footer/footer';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header, Footer],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
 export class App {
-  protected movieService = inject(MovieService)
 }
