@@ -21,3 +21,7 @@ nav {
     background: var(--bg-accent);
     color: var(--accent);
 }
+
+a {
+    text-decoration: none;
+}

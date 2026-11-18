@@ -1,11 +1,12 @@
 <nav>
-    @for (item of items(); track item.value) {
-        <button
-            class="tab"
-            [class.active]="activeTab() === item.value"
-            (click)="selectTab(item.value)"
-        >
-            {{ item.title }}
-        </button>
-    }
+  @for (item of items(); track item.path) {
+    <a
+      class="tab"
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      {{ item.title }}
+    </a>
+  }
 </nav>

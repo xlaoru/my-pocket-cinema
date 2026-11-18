@@ -1,5 +1,5 @@
 <header>
-    <a href="/">
+    <a routerLink="/">
         <h3>My Pocket Cinema</h3>
     </a>
     <div class="search-wrapper">
@@ -14,7 +14,5 @@
     </div>
     <app-tabs
         [items]="headerTabs"
-        [activeTab]="activeTab()"
-        (tabChanged)="onTabChanged($event)"
     />
 </header>
