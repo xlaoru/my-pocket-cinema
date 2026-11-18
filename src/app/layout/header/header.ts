@@ -1,8 +1,10 @@
-import { Component, inject, signal, } from '@angular/core';
+import { Component, inject, linkedSignal, signal, } from '@angular/core';
 import { TabItem, Tabs } from '../../shared/ui/tabs/tabs';
 import { Input } from '../../shared/ui/input/input';
 import { Button } from '../../shared/ui/button/button';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 const HEADER_TABS: TabItem[] = [
   { title: 'Recommendations', path: '/' },
@@ -17,10 +19,16 @@ const HEADER_TABS: TabItem[] = [
 })
 export class Header {
   private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
 
   protected readonly headerTabs = HEADER_TABS
 
-  public searchValue = signal<string>('')
+  private readonly movieFromUrl = toSignal(
+    this.route.queryParamMap.pipe(map(params => params.get('movie') ?? '')),
+    { initialValue: '' },
+  )
+
+  public searchValue = linkedSignal(() => this.movieFromUrl())
 
   onSearch(event: Event) {
     event.preventDefault()
@@ -28,6 +36,7 @@ export class Header {
     const movie = this.searchValue().trim()
 
     if (!movie) {
+      this.router.navigate(['/'])
       return
     }
 
