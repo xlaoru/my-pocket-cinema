@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 
-interface Item {
+export interface TabItem {
   title: string
   value: string
 }
@@ -12,7 +12,7 @@ interface Item {
   templateUrl: './tabs.html',
 })
 export class Tabs {
-  public items = input.required<Item[]>()
+  public items = input.required<TabItem[]>()
   public activeTab = input.required<string>()
 
   public tabChanged = output<string>()
