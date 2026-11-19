@@ -15,4 +15,5 @@ main {
   min-height: 0;
   overflow-y: auto;
   padding: var(--space-8) var(--space-12);
+  container-type: size;
 }

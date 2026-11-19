@@ -7,6 +7,7 @@ export interface Movie {
   overview: string;
   posterUrl: string | null;
   rating: number;
+  myRating: number | null;
   director: string;
 }
 

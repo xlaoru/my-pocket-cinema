@@ -14,5 +14,45 @@
     </div>
 } @else {
     <div class="wrapper">
+        <section class="hero">
+            <a routerLink="/" class="back-link">
+                <svg class="back-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Back
+            </a>
+            @if(movie()) {
+                <article>
+                    <img [src]="movie()?.posterUrl" [alt]="movie()?.title">
+                    <div class="content-info">
+                        <div class="genre">
+                            @for (genre of movie()?.genres; track $index) {
+                                <span class="genre-badge caption">{{ genre }}</span>
+                            }
+                        </div>
+                        <h1>{{ movie()?.title }}</h1>
+                        <p>{{ movie()?.year }} · {{ movie()?.runtime | runtime }} · {{ movie()?.director }}</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <p class="caption">Audience rating</p>
+                                <h2 [style.color]="rateColor()">{{ movie()?.rating }}</h2>
+                            </div>
+                            <div class="rating">
+                                <p class="caption">Your rating</p>
+                                <h2 [style.color]="rateColor()">{{movie()?.myRating}} / 10</h2>
+                            </div>
+                        </div>
+                        <p>{{ movie()?.overview }}</p>
+                    </div>
+                </article>
+            }
+        </section>
+        @if(similar(); as similarMovies) {
+            <ul>
+                @for (similarMovie of similarMovies; track similarMovie.id) {
+                    <app-movie-card [movie]="similarMovie" />
+                }
+            </ul>
+        }
     </div>
 }

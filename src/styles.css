@@ -52,6 +52,8 @@
   --container: 1200px;
   --control-height: 44px;
   --tab-height: 20px;
+  --movie-details-info: 640px;
+  --rating-badge: 140px;
 
   /* Typography */
   --fs-display: 52px;
