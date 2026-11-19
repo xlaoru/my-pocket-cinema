@@ -1,1 +1,18 @@
-<p>movie-details works!</p>
+@if (movieService.movie.loading() && movieService.similar.loading()) {
+    <div class="loader-wrapper">
+        <app-loader />
+    </div>
+} @else if (movieService.movie.error() && movieService.similar.error()) {
+    <div class="error-wrapper">
+        <h2>Oops, something went wrong...</h2>
+        <p>Please wait a little bit</p>
+        <app-button
+            (click)="movieService.reloadMovieDetails()"
+        >
+            Try again
+        </app-button>
+    </div>
+} @else {
+    <div class="wrapper">
+    </div>
+}

@@ -77,4 +77,9 @@ export class MovieService {
         this.recommendations.reload()
         this.topPick.reload()
     }
+
+    reloadMovieDetails() {
+        this.movie.reload()
+        this.similar.reload()
+    }
 }
