@@ -24,7 +24,7 @@ export class Header {
   protected readonly headerTabs = HEADER_TABS
 
   private readonly movieFromUrl = toSignal(
-    this.route.queryParamMap.pipe(map(params => params.get('movie') ?? '')),
+    this.route.queryParamMap.pipe(map(params => params.get('query') ?? '')),
     { initialValue: '' },
   )
 
@@ -40,8 +40,8 @@ export class Header {
       return
     }
 
-    this.router.navigate(['/all-movies'], {
-      queryParams: { movie }
+    this.router.navigate(['/movies'], {
+      queryParams: { query: movie }
     })
   }
 }

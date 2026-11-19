@@ -20,7 +20,7 @@ export class AllMovies {
   public searchResults = this.movieService.searchResults
 
   private readonly movieFromUrl = toSignal(
-    this.route.queryParamMap.pipe(map(params => params.get('movie') ?? '')),
+    this.route.queryParamMap.pipe(map(params => params.get('query') ?? '')),
     { initialValue: '' },
   )
 
