@@ -17,6 +17,9 @@ export class MovieDetails {
   readonly id = input.required<string>()
   readonly movieService = inject(MovieService)
 
+  protected movie = this.movieService.movie.movie
+  protected similar = this.movieService.similar.movies
+
   backToHome () {
     this.router.navigate(['/'])
   }
