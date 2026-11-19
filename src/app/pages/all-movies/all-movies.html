@@ -1,19 +1,19 @@
-@if (movieService.searchLoading()) {
+@if (movieService.search.loading()) {
     <div class="loader-wrapper">
         <app-loader />
     </div>
-} @else if (movieService.searchError()) {
+} @else if (movieService.search.error()) {
     <div class="error-wrapper">
         <h2>Oops, something went wrong...</h2>
         <p>Please wait a little bit</p>
         <app-button
-            (click)="movieService.reloadSearchResults()"
+            (click)="movieService.search.reload()"
         >
             Try again
         </app-button>
     </div>
 } @else {
-    @if (movieService.searchResults().length <= 0) {
+    @if (movieService.search.movies().length <= 0) {
         <div class="error-wrapper">
             <h2>Seems like nothing has been found</h2>
             <p>Please search something different</p>
@@ -32,7 +32,7 @@
                 Back
             </a>
             <ul>
-                @for (movie of movieService.searchResults(); track movie.id) {
+                @for (movie of movieService.search.movies(); track movie.id) {
                     <app-movie-card [movie]="movie" />
                 }
             </ul>

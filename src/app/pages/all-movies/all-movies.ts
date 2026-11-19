@@ -17,7 +17,6 @@ export class AllMovies {
   private readonly router = inject(Router)
   private readonly route = inject(ActivatedRoute)
   public movieService = inject(MovieService)
-  public searchResults = this.movieService.searchResults
 
   private readonly movieFromUrl = toSignal(
     this.route.queryParamMap.pipe(map(params => params.get('query') ?? '')),
@@ -25,7 +24,7 @@ export class AllMovies {
   )
 
   constructor() {
-    effect(() => this.movieService.query.set(this.movieFromUrl()))
+    effect(() => this.movieService.searchQuery.set(this.movieFromUrl()))
   }
 
   backToHome () {

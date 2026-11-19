@@ -1,51 +1,77 @@
-import { httpResource } from '@angular/common/http';
+import { HttpResourceRef, httpResource } from '@angular/common/http';
 import { Service, computed, signal } from '@angular/core';
 import { Movie, RecommendationsResponse, TopPickResponse } from '../models/movie';
 
-function recommendationsResource(url: () => string | undefined) {
-    const resource = httpResource<RecommendationsResponse>(url, {
-        defaultValue: { source: "popular", movies: [] }
-    })
-
+function status(ref: HttpResourceRef<unknown>) {
     return {
-        movies: computed(() => resource.hasValue() ? resource.value().movies : []),
-        source: computed(() => resource.hasValue() ? resource.value().source : null),
-        loading: resource.isLoading,
-        error: resource.error,
-        reload: () => resource.reload(),
+        loading: ref.isLoading,
+        error: ref.error,
+        reload: () => ref.reload(),
     }
 }
 
 @Service()
 export class MovieService {
-    readonly query = signal("")
+    /* ==== Inputs ==== */
+
+    readonly searchQuery = signal("")
+    readonly movieId = signal<string | undefined>(undefined)
+
+    /* ==== Resources ==== */
 
     private searchResource = httpResource<Movie[]>(() => {
-        const q = this.query()
+        const q = this.searchQuery()
         return q ? `/api/movies?search=${encodeURIComponent(q)}` : undefined
-    }, { defaultValue: [] })
+    })
 
-    readonly searchResults = this.searchResource.value
-    readonly searchLoading = this.searchResource.isLoading
-    readonly searchError = this.searchResource.error
-
-    readonly recommendations = recommendationsResource(() => "/api/recommendations")
+    private recommendationsResource = httpResource<RecommendationsResponse>(
+        () => "/api/recommendations"
+    )
 
     private topPickResource = httpResource<TopPickResponse>(
         () => "/api/recommendations/top-pick"
     )
 
+    private movieResource = httpResource<Movie>(() => {
+        const id = this.movieId()
+        return id ? `/api/movies/${id}` : undefined
+    })
+
+    private similarResource = httpResource<Movie[]>(() => {
+        const id = this.movieId()
+        return id ? `/api/movies/${id}/similar` : undefined
+    })
+
+    /* ==== Public state ==== */
+
+    readonly search = {
+        movies: computed(() => this.searchResource.hasValue() ? this.searchResource.value() : []),
+        ...status(this.searchResource),
+    }
+
+    readonly recommendations = {
+        movies: computed(() => this.recommendationsResource.hasValue() ? this.recommendationsResource.value().movies : []),
+        source: computed(() => this.recommendationsResource.hasValue() ? this.recommendationsResource.value().source : null),
+        ...status(this.recommendationsResource),
+    }
+
     readonly topPick = {
         movie: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().movie : null),
         source: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().source : null),
-        loading: this.topPickResource.isLoading,
-        error: this.topPickResource.error,
-        reload: () => this.topPickResource.reload(),
+        ...status(this.topPickResource),
     }
 
-    reloadSearchResults() {
-        this.searchResource.reload()
+    readonly movie = {
+        movie: computed(() => this.movieResource.hasValue() ? this.movieResource.value() : null),
+        ...status(this.movieResource),
     }
+
+    readonly similar = {
+        movies: computed(() => this.similarResource.hasValue() ? this.similarResource.value() : []),
+        ...status(this.similarResource),
+    }
+
+    /* ==== Actions ==== */
 
     reloadRecommendations() {
         this.recommendations.reload()
