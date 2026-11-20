@@ -1,4 +1,4 @@
-export type ListStatus = 'recommend' | 'saved' | 'dropped';
+import { ListStatus } from "./my-list";
 
 export interface Movie {
   id: string;

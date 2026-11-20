@@ -82,4 +82,8 @@ export class MovieService {
         this.movie.reload()
         this.similar.reload()
     }
+
+    setMovie(movie: Movie) {
+        this.movieResource.set(movie)
+    }
 }
