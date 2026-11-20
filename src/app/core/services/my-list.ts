@@ -5,7 +5,7 @@ import { ListItem, ListStatus } from '../models/my-list';
 import { Observable } from 'rxjs';
 
 @Service()
-export class MyList {
+export class MyListService {
     private readonly http = inject(HttpClient)
 
     save(movie: Movie, changes: { status?: ListStatus, rating?: number | null }): Observable<ListItem> {

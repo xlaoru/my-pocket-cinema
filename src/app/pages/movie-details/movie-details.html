@@ -40,35 +40,45 @@
                         <div class="rating-wrapper">
                             <div class="rating">
                                 <p class="caption">Audience rating</p>
-                                <h2 [style.color]="rateColor()">{{ movie()?.rating }}</h2>
+                                <h2 [style.color]="audienceColor()">{{ movie()?.rating }}</h2>
                             </div>
                             <div class="rating">
                                 <p class="caption">Your rating</p>
-                                <h2 [style.color]="rateColor()">{{movie()?.myRating}} / 10</h2>
+                                <h2 [style.color]="myRatingColor()">{{ movie()?.myRating ? movie()?.myRating : '-' }} / 10</h2>
                             </div>
                         </div>
                         <p>{{ movie()?.overview }}</p>
                         <div class="my-review-wrapper">
-                            <div class="rating-status-wrapper">
-                                <h4>In your list as</h4>
-                                <div class="rating-status-control-wrapper">
-                                    <app-button [variant]="movie()?.status === 'recommend' ? 'primary' : 'rating'">Recommend</app-button>
-                                    <app-button [variant]="movie()?.status === 'saved' ? 'primary' : 'rating'">Saved</app-button>
-                                    <app-button [variant]="movie()?.status === 'dropped' ? 'primary' : 'rating'">Dropped</app-button>
+                            @if (movie()?.status) {
+                                <div class="rating-status-wrapper">
+                                    <h4>In your list as</h4>
+                                    <div class="rating-status-control-wrapper">
+                                        <app-button (click)="setStatus('recommend')" [variant]="movie()?.status === 'recommend' ? 'primary' : 'rating'">Recommend</app-button>
+                                        <app-button (click)="setStatus('saved')" [variant]="movie()?.status === 'saved' ? 'primary' : 'rating'">Saved</app-button>
+                                        <app-button (click)="setStatus('dropped')" [variant]="movie()?.status === 'dropped' ? 'primary' : 'rating'">Dropped</app-button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="numbers-wrapper">
-                                <h4>Your rating</h4>
-                                <div class="rating-numbers-wrapper">
-                                    @for (number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track number) {
-                                        <app-button [variant]="(movie()?.myRating ?? 0) >= number ? 'primary' : 'rating'">
-                                            {{ number }}
-                                        </app-button>
-                                    }
+                                <div class="numbers-wrapper">
+                                    <h4>Your rating</h4>
+                                    <div class="rating-numbers-wrapper">
+                                        @for (number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track number) {
+                                            <app-button (click)="setRating(number)" [variant]="(movie()?.myRating ?? 0) >= number ? 'primary' : 'rating'">
+                                                {{ number }}
+                                            </app-button>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            @if (movie()?.myRating && movie()?.status) {
-                                <app-button [variant]="'inline'" danger="true">Remove from list</app-button>
+                                <app-button (click)="removeFromList()" [variant]="'inline'" danger="true">Remove from list</app-button>
+                            } @else {
+                                <div class="not-handle-control-wrapper">
+                                    <h4>Not in your list yet</h4>
+                                    <p class="caption">Save it for later, or mark it if you've already watched it. You can rate it once it's in your list.</p>
+                                    <div class="rating-status-control-wrapper">
+                                        <app-button (click)="setStatus('recommend')" [variant]="movie()?.status === 'recommend' ? 'primary' : 'rating'">Recommend</app-button>
+                                        <app-button (click)="setStatus('saved')" [variant]="movie()?.status === 'saved' ? 'primary' : 'rating'">Saved</app-button>
+                                        <app-button (click)="setStatus('dropped')" [variant]="movie()?.status === 'dropped' ? 'primary' : 'rating'">Dropped</app-button>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
