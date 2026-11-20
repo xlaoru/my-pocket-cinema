@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, input, signal, viewChild } from '@angular/core';
 import { Loader } from '../../shared/ui/loader/loader';
 import { Button } from '../../shared/ui/button/button';
 import { MovieCard } from '../../shared/ui/movie-card/movie-card';
@@ -20,6 +20,9 @@ export class MovieDetails {
 
   protected movie = this.movieService.movie.movie
   protected similar = this.movieService.similar.movies
+
+  private readonly info = viewChild<ElementRef<HTMLElement>>('info')
+  protected readonly infoHeight = signal(0)
 
   public rateColor = computed(() => { 
     const rating = this.movie()?.rating
@@ -46,6 +49,21 @@ export class MovieDetails {
   constructor () {
     effect(() => {
       this.movieService.movieId.set(this.id())
+    })
+
+    const observer = new ResizeObserver(([entry]) => {
+      this.infoHeight.set(entry.borderBoxSize[0].blockSize)
+    })
+    inject(DestroyRef).onDestroy(() => observer.disconnect())
+
+    effect((onCleanup) => {
+      const el = this.info()?.nativeElement
+      if (!el) {
+        return
+      }
+
+      observer.observe(el)
+      onCleanup(() => observer.unobserve(el))
     })
   }
 }

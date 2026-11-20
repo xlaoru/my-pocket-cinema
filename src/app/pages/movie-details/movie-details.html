@@ -23,8 +23,13 @@
             </a>
             @if(movie()) {
                 <article>
-                    <img [src]="movie()?.posterUrl" [alt]="movie()?.title">
-                    <div class="content-info">
+                    <img
+                        class="poster"
+                        [src]="movie()?.posterUrl"
+                        [alt]="movie()?.title"
+                        [style.height.px]="infoHeight()"
+                    >
+                    <div class="content-info" #info>
                         <div class="genre">
                             @for (genre of movie()?.genres; track $index) {
                                 <span class="genre-badge caption">{{ genre }}</span>
@@ -43,6 +48,29 @@
                             </div>
                         </div>
                         <p>{{ movie()?.overview }}</p>
+                        <div class="my-review-wrapper">
+                            <div class="rating-status-wrapper">
+                                <h4>In your list as</h4>
+                                <div class="rating-status-control-wrapper">
+                                    <app-button [variant]="movie()?.status === 'recommend' ? 'primary' : 'rating'">Recommend</app-button>
+                                    <app-button [variant]="movie()?.status === 'saved' ? 'primary' : 'rating'">Saved</app-button>
+                                    <app-button [variant]="movie()?.status === 'dropped' ? 'primary' : 'rating'">Dropped</app-button>
+                                </div>
+                            </div>
+                            <div class="numbers-wrapper">
+                                <h4>Your rating</h4>
+                                <div class="rating-numbers-wrapper">
+                                    @for (number of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track number) {
+                                        <app-button [variant]="(movie()?.myRating ?? 0) >= number ? 'primary' : 'rating'">
+                                            {{ number }}
+                                        </app-button>
+                                    }
+                                </div>
+                            </div>
+                            @if (movie()?.myRating && movie()?.status) {
+                                <app-button [variant]="'inline'" danger="true">Remove from list</app-button>
+                            }
+                        </div>
                     </div>
                 </article>
             }

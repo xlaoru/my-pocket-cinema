@@ -1,3 +1,5 @@
+export type ListStatus = 'recommend' | 'saved' | 'dropped';
+
 export interface Movie {
   id: string;
   title: string;
@@ -8,6 +10,7 @@ export interface Movie {
   posterUrl: string | null;
   rating: number;
   myRating: number | null;
+  status: ListStatus | null;
   director: string;
 }
 

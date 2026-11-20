@@ -111,8 +111,6 @@
 /* ===== Rating ===== */
 
 .btn-rating {
-  width: var(--control-height);
-  padding: 0;
   border-color: var(--border);
   background: var(--bg-elevated);
   color: var(--text-muted);

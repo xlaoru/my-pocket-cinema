@@ -54,7 +54,6 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: var(--space-12);
-    height: 100cqh;
 }
 
 .back-link {
@@ -62,18 +61,17 @@ a:hover {
 }
 
 article {
-    flex: 1;
-    min-height: 0;
     display: flex;
+    align-items: flex-start;
     gap: var(--space-10);
 }
 
-img {
+.poster {
     display: block;
-    height: 100%;
     width: auto;
-    max-width: 100%;
-    object-fit: contain;
+    aspect-ratio: 2 / 3;
+    flex-shrink: 0;
+    object-fit: cover;
 }
 
 .content-info {
@@ -100,7 +98,7 @@ img {
     gap: var(--space-4);
 }
 
-.rating {
+.rating, .my-review-wrapper {
     background: var(--surface);
     border: 1px solid var(--border);
     padding: var(--space-4) var(--space-5);
@@ -109,4 +107,19 @@ img {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+}
+
+.my-review-wrapper {
+    gap: var(--space-4);
+}
+
+.rating-status-wrapper, .numbers-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.rating-status-control-wrapper, .rating-numbers-wrapper {
+    display: flex;
+    gap: var(--space-2);
 }
