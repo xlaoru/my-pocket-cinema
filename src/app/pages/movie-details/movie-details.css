@@ -132,7 +132,7 @@ article {
 
 ul {
     display: grid;
-    grid-template-columns: repeat(5, 200px);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     justify-content: space-between;
     gap: var(--space-6);
     padding: 0;
