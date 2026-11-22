@@ -84,12 +84,19 @@
                 </article>
             }
         </section>
-        @if(similar(); as similarMovies) {
-            <ul>
-                @for (similarMovie of similarMovies; track similarMovie.id) {
-                    <app-movie-card [movie]="similarMovie" />
+            <section class="simiral-movies-wrapper">
+                <h2>Similar movies</h2>
+                @if(similar().length > 0;) {
+                    <ul>
+                        @for (similarMovie of similar(); track similarMovie.id) {
+                            <app-movie-card [movie]="similarMovie" />
+                        }
+                    </ul>
+                } @else {
+                    <div class="warning-wrapper">
+                        <h1>Ooops. Seems like there are no similar movies</h1>
+                    </div>
                 }
-            </ul>
-        }
+            </section>
     </div>
 }
