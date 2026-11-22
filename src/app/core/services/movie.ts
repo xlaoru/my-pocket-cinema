@@ -83,7 +83,27 @@ export class MovieService {
         this.similar.reload()
     }
 
-    setMovie(movie: Movie) {
-        this.movieResource.set(movie)
+    patchMovie(updated: Movie) {
+        const replace = (m: Movie) => m.id === updated.id ? updated : m
+
+        if (this.movieResource.hasValue()) {
+            this.movieResource.update(m => m?.id === updated.id ? updated : m)
+        }
+
+        if (this.similarResource.hasValue()) {
+            this.similarResource.update(list => list?.map(replace))
+        }
+
+        if (this.searchResource.hasValue()) {
+            this.searchResource.update(list => list?.map(replace))
+        }
+
+        if (this.recommendationsResource.hasValue()) {
+            this.recommendationsResource.update(r => r && { ...r, movies: r.movies.map(replace) })
+        }
+
+        if (this.topPickResource.hasValue()) {
+            this.topPickResource.update(r => r?.movie?.id === updated.id ? { ...r, movie: updated } : r)
+        }
     }
 }

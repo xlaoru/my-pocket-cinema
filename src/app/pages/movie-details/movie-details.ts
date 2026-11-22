@@ -51,7 +51,7 @@ export class MovieDetails {
     this.saving.set(true)
 
     request$.subscribe({
-      next: (item) => this.movieService.setMovie(item.movie),
+      next: (item) => this.movieService.patchMovie(item.movie),
       complete: () => this.saving.set(false),
       error: () => this.saving.set(false)
     })
@@ -89,7 +89,7 @@ export class MovieDetails {
     this.saving.set(true)
 
     this.myList.remove(movie.id).subscribe({
-      next: () => this.movieService.setMovie({ ...movie, status: null, myRating: null }),
+      next: () => this.movieService.patchMovie({ ...movie, status: null, myRating: null }),
       complete: () => this.saving.set(false),
       error: () => this.saving.set(false)
     })

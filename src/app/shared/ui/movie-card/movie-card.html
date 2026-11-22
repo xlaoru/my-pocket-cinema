@@ -9,5 +9,12 @@
         <h3>{{ movie().title }}</h3>
         <p [style.color]="'var(--color-text-muted)'">{{ movie().year }} · {{ movie().genres.join(", ") }}</p>
     </a>
-    <app-button [variant]="'ghost'" [block]="true">Save</app-button>
+    <app-button 
+        [variant]="'ghost'" 
+        [block]="true"
+        [disabled]="saving() || saveLocked()"
+        (click)="toggleSave()"
+    >
+        {{ saveLabel() }}
+    </app-button>
 </article>
