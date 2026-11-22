@@ -23,13 +23,17 @@
                     <p>{{ movie.year }} · {{ movie.genres.join(', ') }} · {{ movie.runtime }} min</p>
                     <p>{{ movie.overview }}</p>
                     <div class="control-wrapper">
-                        <app-button>
+                        <app-button
+                            (click)="redirectToDetails()"
+                        >
                             View details
                         </app-button>
                         <app-button
                             [variant]="'ghost'"
+                            [disabled]="saving() || saveLocked()"
+                            (click)="toggleSave()"
                         >
-                            Save
+                            {{ saveLabel() }}
                         </app-button>
                     </div>
                 </div>

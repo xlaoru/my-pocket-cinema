@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Movie } from '../models/movie';
 import { ListItem, ListStatus } from '../models/my-list';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Service()
 export class MyListService {
@@ -22,5 +22,11 @@ export class MyListService {
 
     remove(movieId: string): Observable<void> {
         return this.http.delete<void>(`/api/my-list/${movieId}`)
+    }
+
+    toggleSaved(movie: Movie): Observable<Movie> {
+        return movie.status === "saved"
+            ? this.remove(movie.id).pipe(map(() => ({ ...movie, status: null, myRating: null })))
+            : this.save(movie, { status: "saved" }).pipe((map(item => item.movie)))
     }
 }

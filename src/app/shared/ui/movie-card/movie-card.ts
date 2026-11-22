@@ -54,9 +54,7 @@ export class MovieCard {
       return
     }
 
-    const request$: Observable<Movie> = movie.status === "saved"
-      ? this.myList.remove(movie.id).pipe(map(() => ({ ...movie, status: null, myRating: null })))
-      : this.myList.save(movie, { status: "saved" }).pipe(map(item => item.movie))
+    const request$: Observable<Movie> = this.myList.toggleSaved(movie)
 
     this.saving.set(true)
 
