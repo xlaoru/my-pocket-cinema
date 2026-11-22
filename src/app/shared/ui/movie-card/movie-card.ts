@@ -1,9 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 import { Movie } from '../../../core/models/movie';
 import { Button } from '../button/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [Button],
+  imports: [Button, RouterLink],
   selector: 'app-movie-card',
   styleUrl: './movie-card.css',
   templateUrl: './movie-card.html',

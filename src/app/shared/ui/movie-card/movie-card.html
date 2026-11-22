@@ -1,5 +1,5 @@
 <article>
-    <a href="">
+    <a [routerLink]="['/movies', movie().id]">
         <div class="img-wrapper">
             <div class="rate" [style.background]="rateColor()">
                 <p>{{ movie().rating }}</p>
