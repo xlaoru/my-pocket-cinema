@@ -20,7 +20,7 @@
                 <div class="info-wrapper">
                     <p class="eyebrow">Top Pick for you</p>
                     <h1>{{ movie.title }}</h1>
-                    <p>{{ movie.year }} · {{ movie.genres.join(', ') }} · {{ movie.runtime }} min</p>
+                    <p>{{ movie.year }} · {{ movie.genres.join(', ') }} · {{ movie.runtime | runtime }}</p>
                     <p>{{ movie.overview }}</p>
                     <div class="control-wrapper">
                         <app-button

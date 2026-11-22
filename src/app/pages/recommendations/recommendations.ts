@@ -6,9 +6,10 @@ import { Button } from '../../shared/ui/button/button';
 import { Router } from '@angular/router';
 import { MyListService } from '../../core/services/my-list';
 import { finalize } from 'rxjs';
+import { RuntimePipe } from '../../shared/pipes/runtime-pipe';
 
 @Component({
-  imports: [MovieCard, Loader, Button],
+  imports: [MovieCard, Loader, Button, RuntimePipe],
   selector: 'app-recommendations',
   styleUrl: './recommendations.css',
   templateUrl: './recommendations.html',
