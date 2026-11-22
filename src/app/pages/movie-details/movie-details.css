@@ -68,8 +68,8 @@ article {
 
 .poster {
     display: block;
-    width: auto;
-    aspect-ratio: 2 / 3;
+    width: 400px;
+    height: 600px;
     flex-shrink: 0;
     object-fit: cover;
 }

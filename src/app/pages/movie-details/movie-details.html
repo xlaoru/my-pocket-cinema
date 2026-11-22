@@ -27,9 +27,8 @@
                         class="poster"
                         [src]="movie()?.posterUrl"
                         [alt]="movie()?.title"
-                        [style.height.px]="infoHeight()"
                     >
-                    <div class="content-info" #info>
+                    <div class="content-info">
                         <div class="genre">
                             @for (genre of movie()?.genres; track $index) {
                                 <span class="genre-badge caption">{{ genre }}</span>
