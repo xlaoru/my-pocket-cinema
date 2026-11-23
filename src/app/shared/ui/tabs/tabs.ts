@@ -3,7 +3,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 export interface TabItem {
   title: string
-  path: string
+  path: string | string[]
+  exact?: boolean
 }
 
 @Component({

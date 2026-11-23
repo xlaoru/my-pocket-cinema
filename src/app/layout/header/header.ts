@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 
 const HEADER_TABS: TabItem[] = [
   { title: 'Recommendations', path: '/' },
-  { title: 'My list', path: '/my-list' },
+  { title: 'My list', path: '/my-list', exact: false },
 ];
 
 @Component({

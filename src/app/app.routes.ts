@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Route, Routes, UrlSegment } from '@angular/router';
 
 export const routes: Routes = [
     {
@@ -15,7 +15,16 @@ export const routes: Routes = [
     },
     {
         path: 'my-list',
-        loadComponent: () => import('./pages/my-list/my-list').then(m => m.MyList)
+        redirectTo: 'my-list/recommended',
+        pathMatch: 'full',
+    },
+    {
+        path: 'my-list/:listType',
+        loadComponent: () => import('./pages/my-list/my-list').then(m => m.MyList),
+        canMatch: [
+            (_route: Route, segments: UrlSegment[]) =>
+                ['recommended', 'saved', 'dropped'].includes(segments[1].path)
+        ]
     },
     {
         path: '**',
