@@ -1,3 +1,26 @@
-<app-tabs
-    [items]="myListTabs"
-/>
+<div class="wrapper">
+    <h1>My list</h1>
+    <app-tabs [items]="myListTabs" />
+    <hr>
+
+    @if (myList.list.loading()) {
+        <div class="loader-wrapper">
+            <app-loader />
+        </div>
+    } @else if (myList.list.error()) {
+        <div class="error-wrapper">
+            <h2>Oops, something went wrong...</h2>
+            <app-button (click)="myList.list.reload()">Try again</app-button>
+        </div>
+    } @else if (items().length === 0) {
+        <div class="warning-wrapper">
+            <h2>Nothing here yet</h2>
+        </div>
+    } @else {
+        <ul>
+            @for (item of items(); track item.movie.id) {
+                <li>{{ item.movie.title }}</li>
+            }
+        </ul>
+    }
+</div>
