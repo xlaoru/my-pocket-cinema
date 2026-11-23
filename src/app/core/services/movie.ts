@@ -1,14 +1,7 @@
-import { HttpResourceRef, httpResource } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import { Service, computed, signal } from '@angular/core';
 import { Movie, RecommendationsResponse, TopPickResponse } from '../models/movie';
-
-function status(ref: HttpResourceRef<unknown>) {
-    return {
-        loading: ref.isLoading,
-        error: ref.error,
-        reload: () => ref.reload(),
-    }
-}
+import { resourceStatus } from "./resource-status"
 
 @Service()
 export class MovieService {
@@ -46,29 +39,29 @@ export class MovieService {
 
     readonly search = {
         movies: computed(() => this.searchResource.hasValue() ? this.searchResource.value() : []),
-        ...status(this.searchResource),
+        ...resourceStatus(this.searchResource),
     }
 
     readonly recommendations = {
         movies: computed(() => this.recommendationsResource.hasValue() ? this.recommendationsResource.value().movies : []),
         source: computed(() => this.recommendationsResource.hasValue() ? this.recommendationsResource.value().source : null),
-        ...status(this.recommendationsResource),
+        ...resourceStatus(this.recommendationsResource),
     }
 
     readonly topPick = {
         movie: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().movie : null),
         source: computed(() => this.topPickResource.hasValue() ? this.topPickResource.value().source : null),
-        ...status(this.topPickResource),
+        ...resourceStatus(this.topPickResource),
     }
 
     readonly movie = {
         movie: computed(() => this.movieResource.hasValue() ? this.movieResource.value() : null),
-        ...status(this.movieResource),
+        ...resourceStatus(this.movieResource),
     }
 
     readonly similar = {
         movies: computed(() => this.similarResource.hasValue() ? this.similarResource.value() : []),
-        ...status(this.similarResource),
+        ...resourceStatus(this.similarResource),
     }
 
     /* ==== Actions ==== */
