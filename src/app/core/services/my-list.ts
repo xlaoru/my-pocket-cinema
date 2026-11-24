@@ -2,7 +2,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { computed, inject, Service, signal } from '@angular/core';
 import { Movie } from '../models/movie';
 import { ListItem, ListStatus } from '../models/my-list';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { resourceStatus } from './resource-status';
 
 @Service()
@@ -49,5 +49,15 @@ export class MyListService {
         return movie.status === "saved"
             ? this.remove(movie.id).pipe(map(() => ({ ...movie, status: null, myRating: null })))
             : this.save(movie, { status: "saved" }).pipe((map(item => item.movie)))
+    }
+
+    changeStatus(item: ListItem, status: ListStatus): Observable<ListItem> {
+        return this.save(item.movie, { status }).pipe(
+            tap(() => {
+                this.listResource.update(items =>
+                    items?.filter(i => i.movie.id !== item.movie.id)
+                )
+            })
+        )
     }
 }

@@ -19,7 +19,14 @@
     } @else {
         <ul>
             @for (item of items(); track item.movie.id) {
-                <li>{{ item.movie.title }}</li>
+                <li>
+                    {{ item.movie.title }}
+                    <app-dropdown
+                        [items]="statusItems"
+                        [value]="item.status"
+                        (valueChange)="changeStatus(item, $event)"
+                    />
+                </li>
             }
         </ul>
     }
