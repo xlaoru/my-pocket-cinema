@@ -20,12 +20,41 @@
         <ul>
             @for (item of items(); track item.movie.id) {
                 <li>
-                    {{ item.movie.title }}
-                    <app-dropdown
-                        [items]="statusItems"
-                        [value]="item.status"
-                        (valueChange)="changeStatus(item, $event)"
-                    />
+                    <div class="info-wrapper">
+                        <img
+                            [src]="item.movie.posterUrl"
+                            [alt]="item.movie.title"
+                        />
+                        <div class="text-wrapper">
+                            <h3>{{ item.movie.title }}</h3>
+                            <p>{{ item.movie.year }} · {{ item.movie.genres.join(', ') }} · {{ item.movie.runtime | runtime }}</p>
+                            <p class="caption">Added {{ item.addedAt | date: 'mediumDate' }}</p>
+                        </div>
+                    </div>
+                    <div class="review-wrapper">
+                        <div class="rating-wrapper">
+                            <h3>{{ item.movie.myRating }}</h3>
+                            <p class="caption">your rating</p>
+                        </div>
+                        <div class="status-wrapper">
+                            <p class="caption">Status</p>
+                            <app-dropdown
+                                [items]="statusItems"
+                                [value]="item.status"
+                                (valueChange)="changeStatus(item, $event)"
+                            />
+                        </div>
+                        <app-button variant="icon" danger (click)="removeItem(item)">
+                            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"
+                                fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18" />
+                                <path d="M8 6V4h8v2" />
+                                <path d="M19 6l-1 14H6L5 6" />
+                                <path d="M10 11v6M14 11v6" />
+                            </svg>
+                        </app-button>
+                    </div>
                 </li>
             }
         </ul>

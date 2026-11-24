@@ -1,10 +1,12 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { TabItem, Tabs } from '../../shared/ui/tabs/tabs';
 import { MyListService } from '../../core/services/my-list';
 import { ListItem, ListStatus } from '../../core/models/my-list';
 import { Loader } from '../../shared/ui/loader/loader';
 import { Button } from '../../shared/ui/button/button';
 import { Dropdown, DropdownItem } from '../../shared/ui/dropdown/dropdown';
+import { RuntimePipe } from '../../shared/pipes/runtime-pipe';
+import { DatePipe } from '@angular/common';
 
 export type ListType = 'recommended' | 'saved' | 'dropped';
 
@@ -27,7 +29,7 @@ const STATUS_ITEMS: DropdownItem<ListStatus>[] = [
 ]
 
 @Component({
-  imports: [Tabs, Loader, Button, Dropdown],
+  imports: [Tabs, Loader, Button, Dropdown, RuntimePipe, DatePipe],
   selector: 'app-my-list',
   styleUrl: './my-list.css',
   templateUrl: './my-list.html',
@@ -48,7 +50,11 @@ export class MyList {
       return
     }
 
-    this.myList.changeStatus(item, status).subscribe()
+    this.myList.save(item.movie, { status }).subscribe()
+  }
+
+  protected removeItem(item: ListItem) {
+    this.myList.remove(item.movie).subscribe()
   }
 
   constructor() {

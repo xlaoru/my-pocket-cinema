@@ -54,6 +54,10 @@ export class Recommendations {
 
     this.myList.toggleSaved(movie)
       .pipe(finalize(() => this.saving.set(false)))
-      .subscribe(updated => this.movieService.patchMovie(updated))
+      .subscribe()
+  }
+
+  constructor() {
+    this.movieService.refreshRecommendationIfStale()
   }
 }

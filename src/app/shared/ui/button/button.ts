@@ -1,11 +1,10 @@
-import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, input } from '@angular/core';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'inline' | 'icon' | 'rating';
 export type ButtonSize = 'md' | 'sm';
 
 @Component({
-  imports: [NgClass],
+  imports: [],
   selector: 'app-button',
   styleUrl: './button.css',
   templateUrl: './button.html',

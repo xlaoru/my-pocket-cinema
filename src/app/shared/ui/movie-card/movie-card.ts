@@ -3,8 +3,7 @@ import { Movie } from '../../../core/models/movie';
 import { Button } from '../button/button';
 import { RouterLink } from '@angular/router';
 import { MyListService } from '../../../core/services/my-list';
-import { MovieService } from '../../../core/services/movie';
-import { finalize, map, Observable } from 'rxjs';
+import { finalize } from 'rxjs';
 
 @Component({
   imports: [Button, RouterLink],
@@ -14,7 +13,6 @@ import { finalize, map, Observable } from 'rxjs';
 })
 export class MovieCard {
   private readonly myList = inject(MyListService)
-  private readonly movieService = inject(MovieService)
   
   public movie = input.required<Movie>()
   protected readonly saving = signal(false)
@@ -54,12 +52,10 @@ export class MovieCard {
       return
     }
 
-    const request$: Observable<Movie> = this.myList.toggleSaved(movie)
-
     this.saving.set(true)
 
-    request$
+    this.myList.toggleSaved(movie)
       .pipe(finalize(() => this.saving.set(false)))
-      .subscribe(updated => this.movieService.patchMovie(updated))
+      .subscribe()
   }
 }

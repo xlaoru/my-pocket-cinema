@@ -6,8 +6,8 @@ import { Router, RouterLink } from '@angular/router';
 import { MovieService } from '../../core/services/movie';
 import { RuntimePipe } from '../../shared/pipes/runtime-pipe';
 import { MyListService } from '../../core/services/my-list';
-import { ListItem, ListStatus } from '../../core/models/my-list';
-import { Observable } from 'rxjs';
+import { ListStatus } from '../../core/models/my-list';
+import { finalize, Observable } from 'rxjs';
 
 function ratingColor(rating: number | null | undefined) {
   if (!rating) {
@@ -47,14 +47,12 @@ export class MovieDetails {
     this.router.navigate(['/'])
   }
 
-  private persist(request$: Observable<ListItem>) {
+  private persist(request$: Observable<unknown>) {
     this.saving.set(true)
 
-    request$.subscribe({
-      next: (item) => this.movieService.patchMovie(item.movie),
-      complete: () => this.saving.set(false),
-      error: () => this.saving.set(false)
-    })
+    request$
+      .pipe(finalize(() => this.saving.set(false)))
+      .subscribe()
   }
 
   setStatus(status: ListStatus) {
@@ -86,13 +84,7 @@ export class MovieDetails {
       return
     }
 
-    this.saving.set(true)
-
-    this.myList.remove(movie.id).subscribe({
-      next: () => this.movieService.patchMovie({ ...movie, status: null, myRating: null }),
-      complete: () => this.saving.set(false),
-      error: () => this.saving.set(false)
-    })
+    this.persist(this.myList.remove(movie))
   }
 
   constructor () {

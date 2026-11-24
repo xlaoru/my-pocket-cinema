@@ -5,6 +5,8 @@ import { resourceStatus } from "./resource-status"
 
 @Service()
 export class MovieService {
+    private recommendationsStale = false
+
     /* ==== Inputs ==== */
 
     readonly searchQuery = signal("")
@@ -98,5 +100,27 @@ export class MovieService {
         if (this.topPickResource.hasValue()) {
             this.topPickResource.update(r => r?.movie?.id === updated.id ? { ...r, movie: updated } : r)
         }
+    }
+
+    markRecommendationStale() {
+        if (this.recommendationsResource.hasValue()) {
+            this.recommendationsStale = true
+        }
+    }
+
+    refreshRecommendationIfStale() {
+        if (!this.recommendationsStale) {
+            return
+        }
+
+        this.recommendationsStale = false
+        this.reloadRecommendations()
+    }
+
+    reloadAll() {
+        this.search.reload()
+        this.movie.reload()
+        this.similar.reload()
+        this.reloadRecommendations()
     }
 }
