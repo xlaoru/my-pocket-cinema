@@ -1,0 +1,9 @@
+select {
+    background: var(--bg-elevated);
+    height: 40px;
+    padding: 0px var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: var(--fs-body);
+}

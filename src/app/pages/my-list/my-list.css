@@ -25,3 +25,65 @@ hr {
     border: 1px solid var(--border);
     width: 100%;
 }
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-body);
+}
+
+.info-wrapper {
+    display: flex;
+    gap: var(--space-5);
+}
+
+img {
+    height: 124px;
+    border-radius: var(--radius-sm);
+}
+
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-1);
+}
+
+.description {
+  color: var(--text-body);
+}
+
+.review-wrapper {
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+}
+
+.rating-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    text-align: center;
+}
+
+.status-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}

@@ -7,6 +7,7 @@ import { Button } from '../../shared/ui/button/button';
 import { Dropdown, DropdownItem } from '../../shared/ui/dropdown/dropdown';
 import { RuntimePipe } from '../../shared/pipes/runtime-pipe';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 export type ListType = 'recommended' | 'saved' | 'dropped';
 
@@ -29,7 +30,7 @@ const STATUS_ITEMS: DropdownItem<ListStatus>[] = [
 ]
 
 @Component({
-  imports: [Tabs, Loader, Button, Dropdown, RuntimePipe, DatePipe],
+  imports: [Tabs, Loader, Button, Dropdown, RuntimePipe, DatePipe, RouterLink],
   selector: 'app-my-list',
   styleUrl: './my-list.css',
   templateUrl: './my-list.html',

@@ -2,12 +2,13 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { Loader } from '../../shared/ui/loader/loader';
 import { Button } from '../../shared/ui/button/button';
 import { MovieCard } from '../../shared/ui/movie-card/movie-card';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MovieService } from '../../core/services/movie';
 import { RuntimePipe } from '../../shared/pipes/runtime-pipe';
 import { MyListService } from '../../core/services/my-list';
 import { ListStatus } from '../../core/models/my-list';
 import { finalize, Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 function ratingColor(rating: number | null | undefined) {
   if (!rating) {
@@ -23,13 +24,14 @@ function ratingColor(rating: number | null | undefined) {
 }
 
 @Component({
-  imports: [Loader, Button, MovieCard, RouterLink, RuntimePipe],
+  imports: [Loader, Button, MovieCard, RuntimePipe],
   selector: 'app-movie-details',
   styleUrl: './movie-details.css',
   templateUrl: './movie-details.html',
 })
 export class MovieDetails {
   private readonly router = inject(Router)
+  private readonly location = inject(Location)
 
   readonly id = input.required<string>()
   readonly movieService = inject(MovieService)
@@ -43,8 +45,12 @@ export class MovieDetails {
   protected readonly audienceColor = computed(() => ratingColor(this.movie()?.rating))
   protected readonly myRatingColor = computed(() => ratingColor(this.movie()?.myRating))
 
-  backToHome () {
-    this.router.navigate(['/'])
+  goBack () {
+    if (history.state?.navigationId > 1) {
+      this.location.back()
+    } else {
+      this.router.navigate(['/'])
+    }
   }
 
   private persist(request$: Observable<unknown>) {

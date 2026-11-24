@@ -1,5 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MovieService } from '../../core/services/movie';
 import { Loader } from '../../shared/ui/loader/loader';
 import { Button } from '../../shared/ui/button/button';
@@ -8,7 +9,7 @@ import { map } from 'rxjs';
 import { MovieCard } from '../../shared/ui/movie-card/movie-card';
 
 @Component({
-  imports: [RouterLink, Loader, Button, MovieCard],
+  imports: [Loader, Button, MovieCard],
   selector: 'app-all-movies',
   styleUrl: './all-movies.css',
   templateUrl: './all-movies.html',
@@ -16,6 +17,8 @@ import { MovieCard } from '../../shared/ui/movie-card/movie-card';
 export class AllMovies {
   private readonly router = inject(Router)
   private readonly route = inject(ActivatedRoute)
+  private readonly location = inject(Location)
+  
   public movieService = inject(MovieService)
 
   private readonly movieFromUrl = toSignal(
@@ -29,5 +32,13 @@ export class AllMovies {
 
   backToHome () {
     this.router.navigate(['/'])
+  }
+
+  goBack () {
+    if (history.state?.navigationId > 1) {
+      this.location.back()
+    } else {
+      this.router.navigate(['/'])
+    }
   }
 }

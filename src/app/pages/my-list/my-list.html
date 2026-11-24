@@ -20,20 +20,22 @@
         <ul>
             @for (item of items(); track item.movie.id) {
                 <li>
-                    <div class="info-wrapper">
-                        <img
-                            [src]="item.movie.posterUrl"
-                            [alt]="item.movie.title"
-                        />
-                        <div class="text-wrapper">
-                            <h3>{{ item.movie.title }}</h3>
-                            <p>{{ item.movie.year }} · {{ item.movie.genres.join(', ') }} · {{ item.movie.runtime | runtime }}</p>
-                            <p class="caption">Added {{ item.addedAt | date: 'mediumDate' }}</p>
+                    <a [routerLink]="`/movies/${item.movie.id}`">
+                        <div class="info-wrapper">
+                            <img
+                                [src]="item.movie.posterUrl"
+                                [alt]="item.movie.title"
+                            />
+                            <div class="text-wrapper">
+                                <h3>{{ item.movie.title }}</h3>
+                                <p class="description">{{ item.movie.year }} · {{ item.movie.genres.join(', ') }} · {{ item.movie.runtime | runtime }}</p>
+                                <p class="caption">Added {{ item.addedAt | date: 'mediumDate' }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="review-wrapper">
                         <div class="rating-wrapper">
-                            <h3>{{ item.movie.myRating }}</h3>
+                            <h2 [style.color]="item.movie.myRating ? 'var(--accent)' : 'var(--body)'">{{ item.movie.myRating ? item.movie.myRating : '-' }}</h2>
                             <p class="caption">your rating</p>
                         </div>
                         <div class="status-wrapper">

@@ -25,12 +25,12 @@
         </div>
     } @else {
         <div class="wrapper">
-            <a routerLink="/" class="back-link">
+            <button type="button" class="back-link" (click)="goBack()">
                 <svg class="back-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                     <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 Back
-            </a>
+            </button>
             <ul>
                 @for (movie of movieService.search.movies(); track movie.id) {
                     <app-movie-card [movie]="movie" />
